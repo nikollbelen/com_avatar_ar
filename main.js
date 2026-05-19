@@ -4,11 +4,13 @@
 let currentLat = -12.214045590727505;
 let currentLon = -76.94299953976501;
 let currentAlt = 0; // Altura relativa en metros
+let currentScale = 1.0; // Escala inicial del dinosaurio
 
 // Paso de movimiento (aprox. centímetros en grados de lat/lon)
 // 0.00001 grados son aprox 1.1 metros. Usaremos un paso de 0.5 metros.
 const STEP = 0.000005; 
 const ALT_STEP = 0.5; // Medio metro por clic en altura
+const SCALE_STEP = 0.2; // 20% de escala por clic
 
 document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.getElementById('loading');
@@ -23,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const infoLat = document.getElementById('info-lat');
     const infoLon = document.getElementById('info-lon');
     const infoAlt = document.getElementById('info-alt');
+    const infoScale = document.getElementById('info-scale');
 
     // 1. Construir la Torre de Medición
     // Torre de 10 metros de altura
@@ -72,10 +75,12 @@ document.addEventListener('DOMContentLoaded', () => {
         infoLat.textContent = currentLat.toFixed(6);
         infoLon.textContent = currentLon.toFixed(6);
         infoAlt.textContent = currentAlt.toFixed(1);
+        infoScale.textContent = currentScale.toFixed(1);
 
         // Actualizar Dino
         dinoModel.setAttribute('gps-entity-place', `latitude: ${currentLat}; longitude: ${currentLon};`);
         dinoModel.setAttribute('position', `0 ${currentAlt} 0`); // Mover en el eje Y (altura)
+        dinoModel.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
 
         // Actualizar Torre (para que se mueva junto con el Dino)
         measurementTower.setAttribute('gps-entity-place', `latitude: ${currentLat}; longitude: ${currentLon};`);
@@ -111,5 +116,17 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-alt-down').addEventListener('click', () => {
         currentAlt -= ALT_STEP; // Bajar
         updatePosition();
+    });
+
+    document.getElementById('btn-scale-up').addEventListener('click', () => {
+        currentScale += SCALE_STEP; // Aumentar tamaño
+        updatePosition();
+    });
+
+    document.getElementById('btn-scale-down').addEventListener('click', () => {
+        if (currentScale > SCALE_STEP) {
+            currentScale -= SCALE_STEP; // Disminuir tamaño
+            updatePosition();
+        }
     });
 });
