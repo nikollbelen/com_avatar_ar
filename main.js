@@ -4,13 +4,13 @@
 let currentLat = -12.214045590727505;
 let currentLon = -76.94299953976501;
 let currentAlt = 0; // Altura relativa en metros
-let currentScale = 1.0; // Escala inicial del dinosaurio
+let currentScale = 30.0; // Escala inicial del dinosaurio
 
 // Paso de movimiento (aprox. centímetros en grados de lat/lon)
 // 0.00001 grados son aprox 1.1 metros. Usaremos un paso de 0.5 metros.
 const STEP = 0.000005; 
 const ALT_STEP = 0.5; // Medio metro por clic en altura
-const SCALE_STEP = 0.2; // 20% de escala por clic
+const SCALE_STEP = 5.0; // 5 metros de escala por clic
 
 document.addEventListener('DOMContentLoaded', () => {
     const loadingScreen = document.getElementById('loading');
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('btn-scale-down').addEventListener('click', () => {
-        if (currentScale > SCALE_STEP) {
+        if (currentScale > 30.0) {
             currentScale -= SCALE_STEP; // Disminuir tamaño
             updatePosition();
         }

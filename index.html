@@ -52,7 +52,7 @@
                 <div>Lat: <span id="info-lat">-12.214045</span></div>
                 <div>Lon: <span id="info-lon">-76.943000</span></div>
                 <div>Alt: <span id="info-alt">0</span>m</div>
-                <div>Esc: <span id="info-scale">1.0</span>x</div>
+                <div>Esc: <span id="info-scale">30.0</span>x</div>
                 <div class="status">Buscando GPS...</div>
             </div>
         </div>
@@ -68,11 +68,11 @@
         <a-camera id="camera" gps-camera rotation-reader></a-camera>
 
         <!-- Contenedor del Avatar -->
-        <!-- scale="1 1 1" asume que tu modelo tiene escala real 1:1 en metros -->
+        <!-- scale="30 30 30" para asegurar un tamaño mínimo de 30 metros de escala -->
         <a-entity id="dino-model" 
             gltf-model="./dino.glb" 
             gps-entity-place="latitude: -12.214045590727505; longitude: -76.94299953976501;" 
-            scale="1 1 1"
+            scale="30 30 30"
             position="0 0 0">
         </a-entity>
 
