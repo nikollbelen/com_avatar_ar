@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>AR GPS Avatar</title>
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <!-- AR.js Location-Based -->
+    <script type='text/javascript' src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js'></script>
+    
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <!-- Interfaz de Usuario -->
+    <div id="ui-container">
+        <!-- Pantalla de Carga -->
+        <div id="loading" class="overlay">
+            <div class="spinner"></div>
+            <p>Iniciando Realidad Aumentada...</p>
+            <small>Por favor permite el acceso a la cámara y ubicación GPS.</small>
+        </div>
+
+        <!-- Mensaje de Error -->
+        <div id="error-screen" class="overlay hidden">
+            <h2 style="color: #ff4757;">Error</h2>
+            <p id="error-message">No se pudo acceder al GPS o a la Cámara.</p>
+        </div>
+
+        <!-- Controles de Movimiento -->
+        <div id="controls" class="hidden">
+            <div class="dpad">
+                <button class="btn" id="btn-up">Norte ↑</button>
+                <div class="row">
+                    <button class="btn" id="btn-left">← Oeste</button>
+                    <button class="btn" id="btn-right">Este →</button>
+                </div>
+                <button class="btn" id="btn-down">Sur ↓</button>
+            </div>
+            
+            <div class="altitude-controls">
+                <button class="btn" id="btn-alt-up">Altura +</button>
+                <button class="btn" id="btn-alt-down">Altura -</button>
+            </div>
+            
+            <div class="info-panel">
+                <div>Lat: <span id="info-lat">-12.214045</span></div>
+                <div>Lon: <span id="info-lon">-76.943000</span></div>
+                <div>Alt: <span id="info-alt">0</span>m</div>
+                <div class="status">Buscando GPS...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Escena A-Frame -->
+    <a-scene 
+        vr-mode-ui="enabled: false" 
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
+        renderer="antialias: true; alpha: true">
+        
+        <!-- Cámara GPS (Rastrea la posición real del dispositivo) -->
+        <a-camera id="camera" gps-camera rotation-reader></a-camera>
+
+        <!-- Contenedor del Avatar -->
+        <!-- scale="1 1 1" asume que tu modelo tiene escala real 1:1 en metros -->
+        <a-entity id="dino-model" 
+            gltf-model="./dino.glb" 
+            gps-entity-place="latitude: -12.214045590727505; longitude: -76.94299953976501;" 
+            scale="1 1 1"
+            position="0 0 0">
+        </a-entity>
+
+        <!-- Regla / Torre de Medición de Altura -->
+        <a-entity id="measurement-tower" gps-entity-place="latitude: -12.214045590727505; longitude: -76.94299953976501;">
+            <!-- Generaremos los bloques de altura dinámicamente con JS -->
+        </a-entity>
+
+    </a-scene>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
