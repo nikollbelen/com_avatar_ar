@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusText = document.querySelector('.status');
     
     const dinoModel = document.getElementById('dino-model');
+    const dinoDebug = document.getElementById('dino-debug');
     const measurementTower = document.getElementById('measurement-tower');
 
     // Referencias a textos de info
@@ -81,6 +82,12 @@ document.addEventListener('DOMContentLoaded', () => {
         dinoModel.setAttribute('gps-entity-place', `latitude: ${currentLat}; longitude: ${currentLon};`);
         dinoModel.setAttribute('position', `0 ${currentAlt} 0`); // Mover en el eje Y (altura)
         dinoModel.setAttribute('scale', `${currentScale} ${currentScale} ${currentScale}`);
+
+        // Actualizar Dino de prueba (fijo frente a la cámara)
+        if (dinoDebug) {
+            const debugScale = currentScale / 30.0;
+            dinoDebug.setAttribute('scale', `${debugScale} ${debugScale} ${debugScale}`);
+        }
 
         // Actualizar Torre (para que se mueva junto con el Dino)
         measurementTower.setAttribute('gps-entity-place', `latitude: ${currentLat}; longitude: ${currentLon};`);

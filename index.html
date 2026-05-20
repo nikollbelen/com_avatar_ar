@@ -65,7 +65,14 @@
         renderer="antialias: true; alpha: true">
         
         <!-- Cámara GPS (Rastrea la posición real del dispositivo) -->
-        <a-camera id="camera" gps-camera rotation-reader></a-camera>
+        <a-camera id="camera" gps-camera rotation-reader>
+            <!-- Dinosaurio de Prueba (Fijo al frente a 5 metros para verificar que cargue) -->
+            <a-entity id="dino-debug" 
+                gltf-model="./dino.glb" 
+                position="0 -1 -5" 
+                scale="1 1 1">
+            </a-entity>
+        </a-camera>
 
         <!-- Contenedor del Avatar -->
         <!-- scale="30 30 30" para asegurar un tamaño mínimo de 30 metros de escala -->
